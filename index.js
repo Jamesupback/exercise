@@ -2,9 +2,10 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 require('dotenv').config()
-const mongoose=require('mongoose')
-console.log("ehlloaldj;lj")
-
+const mongoose = require('mongoose')
+mongoose.connect(process.env['URI']).then(
+  () => { console.log("connected") }
+)
 app.use(cors())
 app.use(express.static('public'))
 app.get('/', (req, res) => {
