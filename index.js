@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 const mongoose=require('mongoose')
+console.log("ehlloaldj;lj")
 
 app.use(cors())
 app.use(express.static('public'))
