@@ -4,7 +4,7 @@ const cors = require('cors')
 require('dotenv').config()
 const mongoose = require('mongoose')
 const { users, exercise, log } = require('./schema')
-mongoose.connect(process.env['URI'], { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost:27017/freecodetest")
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -32,21 +32,30 @@ app.get('/api/users', async (req, res) => {
 
 app.post('/api/users/:_id/exercises', async (req, res) => {
   const id=req.params._id
-  const user=users.findById(id)
-  console.log(user)
-  const newexercise = new exercise({
-    _id: req.params._id,
-    description: req.body.description,
-    duration: req.body.duration,
-    date:req.body.date
-    })
-  await newexercise.save().then((data) => {
-    res.json({
-      _id: data._id,
-      description: data.description,
-      duration: data.duration,
-      date: data.date.toDateString()
-    })
+  if(!req.body.date)
+  req.body.date=new Date()
+  await users.findById(id).then((data)=>{
+    if(!data)
+    res.json("you can't send this you cocksucker")
+    else{
+      const exercises=new exercise({
+        id:req.params._id,
+        username:data.username,
+        duration:req.body.duration,
+        description:req.body.description,
+        date:req.body.date
+      })
+
+      exercises.save().then((data)=>{
+        res.json({
+          _id:data._id,
+          username:data.username,
+          duration:data.duration,
+          description:data.description,
+          date:data.date.toDateString()
+        })
+      })
+    }
   })
 })
 

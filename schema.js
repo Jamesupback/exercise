@@ -3,13 +3,11 @@ const userschema = new mongoose.Schema({
   username: String
 })
 const exerciseschema = new mongoose.Schema({
-  _id:mongoose.SchemaTypes.ObjectId,
+  id:mongoose.SchemaTypes.ObjectId,
   username: String,
   description: String,
   duration: Number,
-  date: {
-    type: Date
-  }
+  date:Date
 })
 const logschema = new mongoose.Schema({
   username: String,
