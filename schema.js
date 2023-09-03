@@ -3,13 +3,20 @@ const userschema = new mongoose.Schema({
   username: String
 })
 const exerciseschema = new mongoose.Schema({
-  id:mongoose.SchemaTypes.ObjectId,
+  id:{
+    type:mongoose.SchemaTypes.ObjectId,
+    ref:'users'
+  },
   username: String,
   description: String,
   duration: Number,
   date:Date
 })
 const logschema = new mongoose.Schema({
+  id:{
+    type:mongoose.SchemaTypes.ObjectId,
+    ref:'users'
+  },
   username: String,
   count: Number,
   log: [{
